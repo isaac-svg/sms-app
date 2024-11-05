@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  role_id    String     @id @default(dbgenerated("gen_random_uuid()")) @map("role_id")
+  role_name  String     @unique
+  description String?
+
+  user_roles UserRole[]
+
+  @@map("roles")
+}
+
+model User {
+  user_id       String       @id @default(dbgenerated("gen_random_uuid()")) @map("user_id")
+  username      String       @unique
+  email         String       @unique
+  password_hash String
+  created_at    DateTime     @default(now())
+  is_active     Boolean      @default(true)
+
+  api_keys      ApiKey[]
+  sms_messages  SmsMessage[]
+  billings      Billing[]
+  transactions  Transaction[]
+  roles         UserRole[]
+
+  @@map("users")
+}
+
+model ApiKey {
+  api_key_id String   @id @default(dbgenerated("gen_random_uuid()")) @map("api_key_id")
+  user       User     @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  user_id    String
+  api_key    String   @unique
+  created_at DateTime @default(now())
+  is_active  Boolean  @default(true)
+
+  @@map("api_keys")
+}
+
+model SmsMessage {
+  sms_id           String   @id @default(dbgenerated("gen_random_uuid()")) @map("sms_id")
+  user             User?    @relation(fields: [user_id], references: [user_id], onDelete: SetNull)
+  user_id          String?
+  sender_address   String   @map("sender_address")
+  receiver_address String   @map("receiver_address")
+  message          String
+  sent_at          DateTime @default(now())
+  status           String   @default("Pending")
+  delivery_report  String?
+
+  @@map("sms_messages")
+  @@index([user_id], map: "idx_user_sms")
+}
+
+model Billing {
+  billing_id   String   @id @default(dbgenerated("gen_random_uuid()")) @map("billing_id")
+  user         User     @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  user_id      String
+  credits      Int      @default(0)
+  last_recharge DateTime?
+  created_at   DateTime @default(now())
+
+  @@map("billing")
+  @@index([user_id], map: "idx_user_billing")
+}
+
+model Transaction {
+  transaction_id   String   @id @default(dbgenerated("gen_random_uuid()")) @map("transaction_id")
+  user             User?    @relation(fields: [user_id], references: [user_id], onDelete: SetNull)
+  user_id          String?
+  transaction_type String
+  amount           Int
+  description      String?
+  transaction_date DateTime @default(now())
+
+  @@map("transactions")
+  @@index([user_id], map: "idx_user_transactions")
+}
+
+model UserRole {
+  user_id String
+  role_id String
+  user    User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  role    Role @relation(fields: [role_id], references: [role_id], onDelete: Cascade)
+
+  @@id([user_id, role_id])
+  @@map("user_roles")
+}
+
+
