@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import authRouter from "@routes/auth";
 import sendVerificationEmail from "@lib/mail/account-verification";
+import apiKeyRouter from "@routes/sms/api-key";
+import senderIdRouter from "@routes/sms/senderId";
 dotenv.config({
   path: ".env",
 });
@@ -13,11 +15,17 @@ app.use(express.json());
 const prisma = new PrismaClient();
 
 app.use("/app/smarton/v1", authRouter);
+app.use("/app/smarton/v1/apikey", apiKeyRouter);
+app.use("/app/smarton/v1/senderid", senderIdRouter);
 
 app.listen(port, async () => {
   try {
-    const users = await prisma.user.findMany();
-    console.log(users);
+    // const users = await prisma.user.findMany({
+    //   include: { api_keys: true },
+    // });
+    // const apikeys = await prisma.apiKey.findMany();
+    // console.log(users);
+    // console.log(apikeys);
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
   } catch (error: any) {
     console.log(error.message);

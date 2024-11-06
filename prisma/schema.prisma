@@ -36,10 +36,23 @@ model User {
   billings      Billing[]
   transactions  Transaction[]
   roles         UserRole[]
+  sms_senderIds SmsSenderId[]
+
 
   @@map("users")
 }
 
+model SmsSenderId {
+  id         String   @id @default(dbgenerated("gen_random_uuid()"))
+  sender_id  String   @unique @db.VarChar(12)
+  user       User     @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  user_id    String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("sms_sender_ids")
+}
 model ApiKey {
   api_key_id String   @id @default(dbgenerated("gen_random_uuid()")) @map("api_key_id")
   user       User     @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
