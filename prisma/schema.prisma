@@ -29,7 +29,7 @@ model User {
   email         String       @unique
   password_hash String
   created_at    DateTime     @default(now())
-  is_active     Boolean      @default(true)
+  is_active     Boolean      @default(false)
 
   api_keys      ApiKey[]
   sms_messages  SmsMessage[]

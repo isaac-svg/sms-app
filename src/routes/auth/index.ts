@@ -1,3 +1,4 @@
+import { VerifyEmail } from "@controllers/auth/verifyemail";
 import { signin } from "@controllers/auth/signin";
 import { signup } from "@controllers/auth/signup";
 import { checkAuthentication } from "@controllers/auth/status";
@@ -9,6 +10,7 @@ const authRouter = express.Router();
 authRouter.route("/check-auth").get(isAuthenticated, checkAuthentication);
 authRouter.route("/signup").post(signup);
 authRouter.route("/signin").post(signin);
+authRouter.route("/verify").get(VerifyEmail);
 
 authRouter.route("/forgetpassword/:authtoken");
 

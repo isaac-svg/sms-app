@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
+import sendVerificationEmail from "@lib/mail/account-verification";
 
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "";
@@ -19,13 +20,19 @@ export const signup = async (req: Request, res: Response) => {
       return;
     }
     const hashedPassword = await bcrypt.hash(password_hash, 10);
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         email,
         password_hash: hashedPassword,
         username,
       },
     });
+    const token = jwt.sign(
+      { userId: user.user_id, email: user.email },
+      JWT_SECRET,
+      { expiresIn: "24h" }
+    );
+    await sendVerificationEmail(email, token);
 
     res.status(201).json({ message: "User created successfully" });
     return;
