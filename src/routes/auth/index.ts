@@ -13,5 +13,4 @@ authRouter.route("/signin").post(signin);
 authRouter.route("/verify").get(VerifyEmail);
 
 authRouter.route("/forgetpassword/:authtoken");
-
 export default authRouter;
