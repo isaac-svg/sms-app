@@ -10,7 +10,6 @@ dotenv.config({
   path: ".env",
 });
 // https://sms.nalosolutions.com/smsbackend/clientapi/Resl_Nalo/send-message
-// )746!fnmok(5r9!huv_ngbcf(q6519i9zr@g114vfoc0yt4_bdee8wg7dw5j8j0v
 const app: Express = express();
 const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
