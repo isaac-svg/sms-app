@@ -21,6 +21,9 @@ app.use("/app/smarton/v1/apikey", apiKeyRouter);
 app.use("/app/smarton/v1/senderid", senderIdRouter);
 app.use("/app/smarton/v1/sms/single", singleSMSRoute);
 
+app.get("/", (req, res) => {
+  res.send("WELCOME HOME");
+});
 app.listen(port, async () => {
   try {
     // const users = await prisma.user.findMany({
