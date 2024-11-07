@@ -1,7 +1,7 @@
-import createSmsSenderId from "@controllers/sms/senderid/create";
-import { deleteSmsSenderId } from "@controllers/sms/senderid/delete";
-import { updateSmsSenderId } from "@controllers/sms/senderid/update";
-import { getAllSmsSenderIds } from "@controllers/sms/senderid/user-senderI";
+import createSmsSenderId from "@controllers/app/senderid/create";
+import { deleteSmsSenderId } from "@controllers/app/senderid/delete";
+import { updateSmsSenderId } from "@controllers/app/senderid/update";
+import { getAllSmsSenderIds } from "@controllers/app/senderid/user-senderI";
 import { isAuthenticated } from "@middlewares/auth/isauthenticated";
 import express from "express";
 

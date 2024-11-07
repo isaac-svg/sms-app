@@ -3,11 +3,13 @@ import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import authRouter from "@routes/auth";
 import sendVerificationEmail from "@lib/mail/account-verification";
-import apiKeyRouter from "@routes/sms/api-key";
-import senderIdRouter from "@routes/sms/senderId";
+import apiKeyRouter from "@routes/app/api-key";
+import senderIdRouter from "@routes/app/senderId";
+import singleSMSRoute from "@routes/app/sms/single";
 dotenv.config({
   path: ".env",
 });
+// https://sms.nalosolutions.com/smsbackend/clientapi/Resl_Nalo/send-message
 // )746!fnmok(5r9!huv_ngbcf(q6519i9zr@g114vfoc0yt4_bdee8wg7dw5j8j0v
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -17,6 +19,7 @@ const prisma = new PrismaClient();
 app.use("/app/smarton/v1", authRouter);
 app.use("/app/smarton/v1/apikey", apiKeyRouter);
 app.use("/app/smarton/v1/senderid", senderIdRouter);
+app.use("/app/smarton/v1/sms/single", singleSMSRoute);
 
 app.listen(port, async () => {
   try {
