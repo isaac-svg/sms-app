@@ -16,7 +16,7 @@ exports.signup = void 0;
 const client_1 = require("@prisma/client");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const account_verification_1 = __importDefault(require("../../lib/mail/account-verification"));
+const account_verification_1 = __importDefault(require("@lib/mail/account-verification"));
 const prisma = new client_1.PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "";
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

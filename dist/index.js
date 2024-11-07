@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
 const dotenv_1 = __importDefault(require("dotenv"));
-const auth_1 = __importDefault(require("./routes/auth"));
-const api_key_1 = __importDefault(require("./routes/app/api-key"));
-const senderId_1 = __importDefault(require("./routes/app/senderId"));
-const single_1 = __importDefault(require("./routes/app/sms/single"));
+const auth_1 = __importDefault(require("@routes/auth"));
+const api_key_1 = __importDefault(require("@routes/app/api-key"));
+const senderId_1 = __importDefault(require("@routes/app/senderId"));
+const single_1 = __importDefault(require("@routes/app/sms/single"));
 dotenv_1.default.config({
     path: ".env",
 });
