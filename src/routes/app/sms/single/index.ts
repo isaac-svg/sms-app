@@ -3,7 +3,7 @@ import { isAuthenticated } from "@middlewares/auth/isauthenticated";
 import express from "express";
 
 const singleSMSRoute = express.Router();
-
+//
 singleSMSRoute.route("/send").post(sendSingleSMS);
 // singleSMSRoute.route("/delete").delete(isAuthenticated, deleteSmsSenderId);
 // singleSMSRoute.route("/update").patch(isAuthenticated, updateSmsSenderId);
