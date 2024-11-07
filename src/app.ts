@@ -27,21 +27,4 @@ app.get("/", (req, res) => {
   res.send("WELCOME HOME");
 });
 
-app.listen(port, async () => {
-  try {
-    // const users = await prisma.user.findMany({
-    //   include: { api_keys: true },
-    // });
-    // const apikeys = await prisma.apiKey.findMany();
-    // console.log(users);
-    // console.log(apikeys);
-    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
-  } catch (error: any) {
-    console.log(error.message);
-    async () => await prisma.$disconnect();
-  } finally {
-    async () => await prisma.$disconnect();
-  }
-});
-
 export default app;
