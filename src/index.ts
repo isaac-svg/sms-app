@@ -6,6 +6,7 @@ import sendVerificationEmail from "@lib/mail/account-verification";
 import apiKeyRouter from "@routes/app/api-key";
 import senderIdRouter from "@routes/app/senderId";
 import singleSMSRoute from "@routes/app/sms/single";
+import bodyParser = require("body-parser");
 dotenv.config({
   path: ".env",
 });
@@ -13,7 +14,8 @@ dotenv.config({
 // )746!fnmok(5r9!huv_ngbcf(q6519i9zr@g114vfoc0yt4_bdee8wg7dw5j8j0v
 const app: Express = express();
 const port = process.env.PORT || 3000;
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 const prisma = new PrismaClient();
 
 app.use("/app/smarton/v1", authRouter);
